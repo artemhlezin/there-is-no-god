@@ -9,7 +9,6 @@ void main() {
   vec4 beauty = texture2D(color, vUv);
   vec4 data = texture2D(simData, vUv);
 
-  vec3 color = mix(beauty.rgb, vec3(.5, 0.0, 0.0), vec3(data.g));
-
-  gl_FragColor = vec4(color.rgb, 1.0);
+  vec3 color = mix(beauty.rgb, vec3(0.5, 0.0, 0.0), vec3(data.g));
+  gl_FragColor = vec4(color, 1.0);
 }

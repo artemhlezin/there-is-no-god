@@ -25,19 +25,21 @@ const textureSize = {
 };
 const pixelSize = 1.0 / textureSize.width;
 const brushIntensity = 1.0;
-const brushRadius = 0.02; // [0.0 to 0.5]
+const brushRadius = 0.03; // [0.0 to 0.5]
 
 // Main scene parameters
+const canvas = document.querySelector(".gpu-canvas");
 const viewportSizes = {
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: canvas.clientWidth,
+  height: canvas.clientWidth * 0.5,
 };
+
 const backgroundColor = new THREE.Color(0.9, 0.9, 0.9);
 const displacementScale = 0.2;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
-  canvas: document.querySelector("canvas.gpu"),
+  canvas,
   precision: "highp",
 });
 renderer.setSize(viewportSizes.width, viewportSizes.height);
@@ -122,17 +124,23 @@ mainScene.add(battlefieldMesh);
 
 // Setup main camera and controls
 const mainCamera = new THREE.PerspectiveCamera(
-  75,
+  45,
   viewportSizes.width / viewportSizes.height,
   0.1,
   100
 );
-mainCamera.position.z = 3;
+mainCamera.position.z = 1.3;
+mainCamera.position.y = 1;
+// mainCamera.position.x = -0.3;
+
 mainScene.add(mainCamera);
 
 const controls = new OrbitControls(mainCamera, renderer.domElement);
+controls.target = new THREE.Vector3(0.0, 0.0, 0.3);
 controls.enableDamping = true;
 controls.dampingFactor = 0.1;
+controls.maxPolarAngle = THREE.MathUtils.degToRad(60);
+controls.minDistance = 0.5;
 
 const raycaster = new THREE.Raycaster();
 const pointer = new THREE.Vector2(1.0, 1.0);
@@ -150,7 +158,7 @@ function animate() {
   // Raycast
   raycaster.setFromCamera(pointer, mainCamera);
   const intersects = raycaster.intersectObject(battlefieldMesh);
-
+  controls.enabled = intersects.length > 0;
   if (intersects.length > 0 && intersects[0].uv) {
     simulationQuad.material.uniforms.brushLocation.value = intersects[0].uv;
   }
@@ -183,14 +191,19 @@ function animate() {
   renderer.render(mainScene, mainCamera);
 }
 
-window.addEventListener("pointermove", (event) => {
-  pointer.x = (event.clientX / window.innerWidth) * 2 - 1; // -1 to +1
-  pointer.y = -(event.clientY / window.innerHeight) * 2 + 1;
+canvas.addEventListener("pointermove", (event) => {
+  const cRect = canvas.getBoundingClientRect();
+  const canvasX = Math.round(event.clientX - cRect.left);
+  const canvasY = Math.round(event.clientY - cRect.top);
+
+  pointer.x = (canvasX / viewportSizes.width) * 2 - 1; // -1 to +1
+  pointer.y = -(canvasY / viewportSizes.height) * 2 + 1;
 });
 
 window.addEventListener("resize", () => {
-  viewportSizes.width = window.innerWidth;
-  viewportSizes.height = window.innerHeight;
+  const container = document.querySelector(".container");
+  viewportSizes.width = container.clientWidth;
+  viewportSizes.height = container.clientWidth * 0.5;
 
   mainCamera.aspect = viewportSizes.width / viewportSizes.height;
   mainCamera.updateProjectionMatrix();
