@@ -26,6 +26,7 @@ const textureSize = {
 const pixelSize = 1.0 / textureSize.width;
 const brushIntensity = 1.0;
 const brushRadius = 0.03; // [0.0 to 0.5]
+const pointer = new THREE.Vector2(0.0, 0.2);
 
 // Main scene parameters
 const canvas = document.querySelector(".gpu-canvas");
@@ -67,7 +68,7 @@ const simulationMat = new THREE.ShaderMaterial({
     flux: { value: fluxRTB.texture },
     brushIntensity: { value: brushIntensity },
     brushRadius: { value: brushRadius },
-    brushLocation: { value: new THREE.Vector2(0.5, 0.5) },
+    brushLocation: { value: pointer },
 
     area: { value: area },
     pipeLength: { value: pipeLength },
@@ -128,21 +129,20 @@ const mainCamera = new THREE.PerspectiveCamera(
   0.1,
   100
 );
-mainCamera.position.z = 1.3;
-mainCamera.position.y = 1;
+mainCamera.position.z = 1.0;
+mainCamera.position.y = 1.3;
 // mainCamera.position.x = -0.3;
 
 mainScene.add(mainCamera);
 
 const controls = new OrbitControls(mainCamera, renderer.domElement);
-controls.target = new THREE.Vector3(0.0, 0.0, 0.3);
+controls.target = new THREE.Vector3(0.0, 0.0, 0.0);
 controls.enableDamping = true;
 controls.dampingFactor = 0.1;
 controls.maxPolarAngle = THREE.MathUtils.degToRad(60);
 controls.minDistance = 0.5;
 
 const raycaster = new THREE.Raycaster();
-const pointer = new THREE.Vector2(1.0, 1.0);
 
 function animate() {
   setTimeout(function () {

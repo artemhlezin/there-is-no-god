@@ -8,7 +8,6 @@ body {
   background: rgb(228, 228, 228);
 }
 
-
 h1,
 h2,
 h3,
@@ -25,10 +24,6 @@ img {
   width: 80%;
   margin: 0 auto;
 }
-
-/* html {
-    background: rgb(235, 235, 235);
-  } */
 
 .header-title {
   font-size: 4em;
