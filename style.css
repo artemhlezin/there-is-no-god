@@ -8,16 +8,17 @@ body {
   background: rgb(228, 228, 228);
 }
 
-img {
-  max-width: 100%;
-  display: block;
-}
 
 h1,
 h2,
 h3,
 p {
   margin: 0;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 .container {
@@ -74,7 +75,6 @@ p {
   left: 50%;
 
   transform: translate(-50%, -50%);
-  /* transition: opacity 0.8s; */
 }
 
 .spoiler:hover .spoiler-text {
