@@ -11,8 +11,8 @@ const simulationFS = await loadShader("shaders/simulation.frag.glsl");
 
 // Load textures
 const textureLoader = new THREE.TextureLoader();
-const initialData = textureLoader.load("image/map.png"); // R - terrain, G - blood
-const beauty = textureLoader.load("image/backed.jpg"); // Terrain beauty pass
+const initialData = textureLoader.load("image/height.webp"); // R - terrain, G - blood
+const beauty = textureLoader.load("image/beauty.webp"); // Terrain beauty pass
 
 // Sim parameters
 const gravity = 10.0;
@@ -35,7 +35,7 @@ const viewportSizes = {
 };
 
 const backgroundColor = new THREE.Color(0.9, 0.9, 0.9);
-const displacementScale = 0.2;
+const displacementScale = 0.1;
 
 // Renderer
 const renderer = new THREE.WebGLRenderer({
@@ -43,7 +43,6 @@ const renderer = new THREE.WebGLRenderer({
   precision: "highp",
 });
 renderer.setSize(viewportSizes.width, viewportSizes.height);
-// renderer.outputEncoding = THREE.sRGBEncoding;
 
 // Setup simulation scene
 let simulationRTA = new THREE.WebGLRenderTarget(

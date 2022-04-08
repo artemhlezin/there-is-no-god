@@ -83,7 +83,7 @@ p {
 
 .war-crimes {
   filter: brightness(0%);
-  transition-duration: 0s;
+  transition-duration: 2s;
 }
 .war-crimes:hover {
   filter: brightness(100%);
