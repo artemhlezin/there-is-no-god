@@ -1,4 +1,4 @@
-[Online Demo](artemhlezin.github.io/there-is-no-god/)
+[Online Demo](https://artemhlezin.github.io/there-is-no-god/)
 # there-is-no-god
 There is no God in 2022, except for the Armed Forces of Ukraine
 
